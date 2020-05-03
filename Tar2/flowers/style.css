@@ -1,0 +1,19 @@
+img {
+    position: fixed;
+    float: left;
+    width:  150px;
+    height: 250px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+    background-color: white;
+    position : absolute;
+    top: 100px;
+    box-shadow: bisque;
+
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

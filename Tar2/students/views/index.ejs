@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- views/index.ejs -->
+<html lang="en">
+<head>
+    <%- include partials/head %>
+</head>
+<body class="container">
+    <header>
+        <%- include partials/header %>
+    </header>
+    <main>
+        <div class="jumbotron">
+            <h1>The Great Hogwarts Students</h1>
+            <p>Welcome to Hogwarts students listing</p>
+        </div>
+        <div class="row">
+
+            <% students.forEach(function(student) { %>
+            <%- include ./partials/student.ejs  %>
+        <% }); %>
+        </div>
+    <footer>
+        <% include partials/footer %>
+    </footer>
+</body>
+</html>
