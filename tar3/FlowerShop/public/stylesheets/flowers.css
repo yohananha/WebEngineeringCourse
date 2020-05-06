@@ -1,0 +1,17 @@
+.navbar-inverse{
+    background: #2c3e50;
+}
+
+.nav-link{
+    color: white;
+}
+
+#modal-launcher{
+    color: white;
+}
+
+#logo-text{
+    font-family: 'Pacifico', cursive;
+    color: #2c3e50;
+    font-size: 30px;
+}
