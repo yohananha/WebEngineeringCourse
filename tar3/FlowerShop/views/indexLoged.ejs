@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <title>ex T3</title>
+ 
+</head>
+<body>
+
+    <h1>you are loged in as: <%= role %></h1>
+    
+    <ul>
+        <li><a href="">About</a></li>
+        <li><a href="">Flowers</a></li>
+
+        <li><a href="/../contact">Contact</a></li>
+        
+        <% if(role === "manager"){ %>
+            <li><a id="branchesLink" href="">Branches</a></li>
+        <% } %>
+        <%if(role === "employee" | role ==="manager" ){ %>
+            <li><a id="employeesLink" href="/../employees">Employees</a></li>
+        <% } %>
+
+    
+        <li><a  href="">Logout</a></li>
+
+      </ul>
+
+      <div id="mainContainer"></div>
+
+      <!-- <script>
+        // $(document).ready(function(){
+           $("#aba").click(function(e){
+            e.preventDefault();
+            $("#mainContainer").load("/views/branches.html");
+            });
+            $("#branchesLink").click(function(e){
+                e.preventDefault();
+                console.log("123456789999");
+                $("#mainContainer").load("/views/branches.html");
+            });
+        // });
+        </script> -->
+        
+</body>
+</html> 
