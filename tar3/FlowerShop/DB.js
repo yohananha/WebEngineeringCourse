@@ -147,9 +147,18 @@ flowers = [
 
 // if no such user or incorrect password => return none. else returns the role
 function isAuthenticated(username, password){
+    console.log("user:  " + username);
+    console.log("pas: " + password);
+
+    // const result = employees.filter(obj => {
+    //     return obj.UserName === "em1"
+    //   })
+
     const user = employees.find(aUser => {
        return aUser.UserName === username
     });
+
+    console.log("user2 is:  " + user);
 
 
     if(user && user.password === password){

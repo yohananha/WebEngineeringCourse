@@ -1,37 +1,104 @@
 <!DOCTYPE html>
-<html lang="EN">
+<html lang="en">
 <head>
-    <title>Image Gallery</title>
-    <link rel='stylesheet' type="text/css" href='/stylesheets/flowers.css'>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+    <title>ex T3</title>
+ 
 </head>
 <body>
-<header>
+<h3>This is new ! ! !</h3>
+    <h1>you are loged in as: 
+        <% if(role){ %>
+            <%= role %>
+        <% }else{ %>
+            visitor
+        <% } %>
+        
+    
+    </h1>
+    <div id="navbar">
+    <ul>
+        <li><a href="">About</a></li>
+        <li><a href="">Flowers</a></li>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" id="navb">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="bs-nav-demo">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Sign Up</a></li>
-                    <li><a href="#">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <%- //include partials/header.ejs %>-->
-</header>
+        <li><a href="/../contact">Contact</a></li>
+        
+        <% if(role === "manager"){ %>
+            <li><a id="branchesLink" href="">Branches</a></li>
+        <% } %>
+        <%if(role === "employee" | role ==="manager" ){ %>
+            <li><a id="employeesLink" href="/../employees">Employees</a></li>
+        <% } %>
 
-<div class="container">
-    <div class="jumbotron">
-        <h1><i class="fas fa-camera-retro"></i> The Image Gallery</h1>
-        <p>This is the image gallery</p>
+
+
+        <% if(role){ %>
+            <li><a  href="">Logout</a></li>
+
+        <% }else{ %>
+            <li><a  href="" onclick="replacePostForm();return false;">Login</a></li>
+
+        <% } %>
+        
+
+
+      </ul>
     </div>
-</div>
+
+      <div id="mainContainer"></div>
+
+      <script>
+          function replacePostForm(){
+              console.log("works!!");
+
+            const name = "emp1";
+            const email = "1234";
+
+            fetch('/', {
+                      method: 'POST',
+                      headers: {
+                    'Content-Type': 'application/json'
+                    },
+                      body: JSON.stringify({name:name, email:email})
+                  }).then(function (response) {
+                     // console.log(response);
+                      return response.json();
+                  }).then(function(data) {
+                      if(data){
+                          //sendAnotherFechToINDEX.Ejs
+                          updateNavbar(data);
+                      }else{
+                        console.log("???????  ERROR  ????/");
+                      }
+                      
+                  });
+  
+              }
+
+          
+
+            function updateNavbar(role){
+                 $("#navbar").load("/navbar/" + role);
+           }
+
+      </script>
+
+      <!-- <script>
+        // $(document).ready(function(){
+           $("#aba").click(function(e){
+            e.preventDefault();
+            $("#mainContainer").load("/views/branches.html");
+            });
+            $("#branchesLink").click(function(e){
+                e.preventDefault();
+                console.log("123456789999");
+                $("#mainContainer").load("/views/branches.html");
+            });
+        // });
+        </script> -->
+        
 </body>
-</html>
+</html> 
