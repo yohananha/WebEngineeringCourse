@@ -1,13 +1,13 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-const bobyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const db = require("./DB");
 
 
 app.set('view engine', 'ejs');
 
-app.use(bobyParser());
+app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+    res.render("indexNoam.ejs");
 });
 
 app.get('/', function(req, res) {
