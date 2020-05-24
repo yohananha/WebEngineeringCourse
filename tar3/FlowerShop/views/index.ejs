@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ("partials/head.ejs") %>
+</head>
+<body>
+<header>
+    <%- include ("partials/header.ejs") %>
+</header>
+
+<div id="mainContainer">
+    <%- include ("about.ejs") %>
+  </div>
+  
+   
+
+</body>
+</html>
+
+<script>
+     var role = null;
+
+     //   hashtag navigation   //
+    window.onhashchange = function(){
+           updateContent(window.location.hash);
+        };
+
+       async function updateContent(hashKey){
+       
+       switch(hashKey){
+       
+               case "#branches":
+                   await $("#mainContainer").load("/branches" );
+                   updateData(hashKey,role);
+                   break;
+
+               case "#users":
+                  console.log("users was clicked!");
+
+                  await $("#mainContainer").load("/users/" + role);
+                   updateData(hashKey,role);
+                   break;
+
+               case "#contact":
+                   $("#mainContainer").load("/contact" );
+                   break;
+
+               case "#catalogue":
+                   console.log("catalog was clicked!");
+                  await $("#mainContainer").load("/catalogue" );
+                   updateData(hashKey,role);
+                   break;
+
+               case "#logout":
+                   role = null;
+                   await updateNavbar(role);
+                   $("#mainContainer").load("/about" );
+                   break;
+
+               case "about":
+               case "":
+               default:
+                   $("#mainContainer").load("/about" ); 
+                   break;
+           }
+   
+   }
+
+   function updateData(hashKey, role){
+                if(hashKey === "#users" && role === "employee"){
+                        const path = '/api/users/employee';  
+                        fetchNupdate(path);
+                }
+                if(hashKey === "#users" && role === "manager"){
+                    const path = '/api/users/manager';  
+                    fetchNupdate(path);
+                }
+                if(hashKey === "#branches" && role === "manager"){
+                    const path = '/api/branches/manager';  
+                    fetchNupdate(path);
+                }
+                if(hashKey === "#catalogue"){
+                    const path = '/api/catalogue';
+                    console.log("befor fechNUpdat catalogue");  
+                    fetchNupdate(path);
+                }
+                
+           }
+
+           function fetchNupdate(path){
+            fetch(path)
+                .then(
+                    function(response) {
+                    if (response.status !== 200) {
+                        console.log('Looks like there was a problem. Status Code: ' +
+                        response.status);
+                        return;
+                    }
+
+                    response.json().then(function(data) {
+                        console.log("data: ", data);
+                       Object.keys(data).forEach(function (key) {
+                        console.log("data[key]: ", data[key]);
+
+                           Object.keys(data[key]).forEach(function (key2) {
+                               var table = key2 + "Table";
+                               console.log("table is: ", table);
+
+                               updatTable(data[key][key2], table );
+                           });
+
+                        });
+                    });
+                    })
+                .catch(function(err) {
+                    console.log('Fetch Error :-S', err);
+                });
+        }
+
+        function insertItem(item, tableName){
+                var table = document.getElementById(tableName);
+                var row = table.insertRow();
+                Object.keys(item).forEach((key) => {
+                  row.insertCell().innerHTML = item[key];      
+                });
+            }
+
+            function updatTable(data, table){
+                console.log("updatTable: ", table);
+                console.log("with data: ", data);
+
+                data.forEach((item => {
+                    insertItem(item, table);
+                }));
+
+            }
+
+</script>

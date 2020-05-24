@@ -8,9 +8,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="get">
-                    <label for="fname">Full name:</label>
-                    <input type="text" id="fname" name="fname"><br><br>
+                <form action="" method="get" id="form">
+                    <label for="userName">Full name:</label>
+                    <input type="text" id="userName" name="userName"><br><br>
                     <label for="password">Last name:</label>
                     <input type="password" id="password" name="password"><br><br>
                     <input type="submit" value="Submit">
@@ -24,3 +24,40 @@
         </div>
     </div>
 </div>
+
+<script>
+
+var form = document.getElementById('form');
+
+form.addEventListener('submit', function(event) {
+
+    var userName = form[0].value;
+    var password = form[1].value;
+    
+    fetch('/../', {
+                      method: 'POST',
+                      headers: {
+                    'Content-Type': 'application/json'
+                    },
+                      body: JSON.stringify({userName:userName, password:password})
+
+                  }).then(function (response) {
+                      return response.json();
+                  }).then(function(data) {
+                    role = data;
+                      console.log("LOG role is: ", role);
+                       
+                        updateNavbar(role);
+                  });
+
+                  
+    event.preventDefault();
+    });
+
+    function updateNavbar(role){
+        console.log("updateNavbar clicked with role: ", role);
+                 $("#navbar").load("/header/" + role);
+           }
+
+
+</script>

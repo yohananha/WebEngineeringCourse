@@ -17,39 +17,86 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get("/", (req, res) => {
-    res.render("indexNoam.ejs");
+    res.render("index.ejs",  { role: null });
 });
 
-app.get('/', function(req, res) {
-    let line = "Any your code that you haven't looked at for few months might have been written by someone else";
-    res.render('index2');
-});
 
+// post login form // 
 app.post("/", (req, res) => {
-    const userName = req.body.userName;
-    const password = req.body.password;
-   
-    const role = db.isAuthenticated(userName, password);
-    if(role){
-        res.render("indexLoged.ejs",{ role: role });
-    }
+    var userName = req.body.userName;
+    var password = req.body.password;
+
+    var role = db.isAuthenticated(userName, password);
+
+    res.json(role);
 });
 
+// render views partials // 
+app.get("/header/:role", (req, res) => {
+    var role = req.params.role;
+    console.log("APP role is: ", role);
+    if(role){
+        res.render("partials/header.ejs", {role: role});
+    }else{
+        res.render("partials/header.ejs", {role: null});
+
+    }
+
+});
+
+
+
+
+// render views //
+app.get("/users/:role", (req, res) => {
+    var role = req.params.role;
+    if(role === "manager"){
+        res.render("usersForManager.ejs", {role: role});
+    }
+    if(role === "employee"){
+        res.render("usersForEmployee.ejs", {role: role});
+    }
+    
+});
+
+
+app.get("/branches", (req, res) => {
+    res.render("branches.ejs");
+});
 app.get("/contact", (req, res) => {
     res.render("contact.ejs");
 });
-
-app.get("/login", (req, res) => {
-    res.render("login.ejs");
+app.get("/about", (req, res) => {
+    res.render("about.ejs");
+});
+app.get("/catalogue", (req, res) => {
+    res.render("catalogue.ejs");
 });
 
-app.get("/employees", (req, res) => {
-    res.send("you got to /employees");
+
+// json api //
+app.get("/api/users/:role", (req, res) => {
+    var role = req.params.role;
+    var ans = db.getUsers(role);
+    res.json(ans);
 });
 
-app.get("/branches", (req, res) => {
-    res.render("you got to /branches");
+app.get("/api/branches/:role", (req, res) => {
+    const role = req.params.role;
+    const ans = db.getBranches(role);
+    res.json(ans);
 });
+
+app.get("/api/catalogue", (req, res) => {
+    const ans = db.getCatalogue();
+    res.json(ans);
+});
+
+
+
+
+
+
 
 app.listen(8080, function(){
     console.log('8080 is the magic port');

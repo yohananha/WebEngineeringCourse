@@ -1,5 +1,7 @@
-branches = [
+branchesList = [
+    
     {
+        name: "b1",
         active: true,
         employees: 10,
         Revenue: 20000,
@@ -7,6 +9,7 @@ branches = [
         district: "north"
     },
     {
+        name: "b2",
         active: false,
         employees: 6,
         Revenue: 1500,
@@ -14,6 +17,7 @@ branches = [
         district: "center"
     },
     {
+        name: "b3",
         active: true,
         employees: 10,
         Revenue: 10000,
@@ -21,7 +25,9 @@ branches = [
         district: "Tel-Aviv"
     }
 ]
-
+branches = [
+    {branches: branchesList}
+];
 managers = [
     {
         employeeId: "111",
@@ -38,12 +44,14 @@ clients = [
     {
         clientId: "111",
         isVIP: false,
-        lastVisit: "10/10/10"
+        lastVisit: "10/10/10",
+        password: 1234
     },
     {
         clientId: "116",
         isVIP: true,
-        lastVisit: "12/13/14"
+        lastVisit: "12/13/14",
+        password: 1235
     }
   
 ]
@@ -117,13 +125,13 @@ employees = [
 ]
  
 users = [
-    employees,
-    managers,
-    clients,
-    suppliers
+    {employees: employees},
+    {managers: managers},
+    {clients: clients},
+    {suppliers: suppliers}
 ]
 
-flowers = [
+flowersList = [
     {
         name: "sun",
         color: "blue",
@@ -144,23 +152,43 @@ flowers = [
     }
   
 ]
+catalogue = [
+    {catalogue: flowersList}
+];
+function getUsers(role){
 
+    if(role === "employee" ){
+        var myUsers = clients.map(a => ({...a})); // deep copy
+        myUsers.map(user => delete user.password);
+        return myUsers;
+    }
+
+    if(role === "manager" ){
+        var myUsers = users.Fo
+        var myUsers = users.map(a => ({...a}));
+        return myUsers;
+    }
+    return [];
+}
+function getBranches(role){
+
+    if(role === "manager" ){
+        var myBranches = branches.map(a => ({...a}));
+        return myBranches;
+    }
+}
+function getCatalogue(){
+
+    
+        var myFlowers = catalogue.map(a => ({...a}));
+        return myFlowers;
+    
+}
 // if no such user or incorrect password => return none. else returns the role
 function isAuthenticated(username, password){
-    console.log("user:  " + username);
-    console.log("pas: " + password);
-
-    // const result = employees.filter(obj => {
-    //     return obj.UserName === "em1"
-    //   })
-
     const user = employees.find(aUser => {
        return aUser.UserName === username
     });
-
-    console.log("user2 is:  " + user);
-
-
     if(user && user.password === password){
       return user.isManager ? "manager" : "employee";
     }
@@ -169,5 +197,7 @@ function isAuthenticated(username, password){
 
 module.exports = {
      isAuthenticated : isAuthenticated,
-     somethingElse : "somethingElse" 
-    }
+     getUsers : getUsers,
+     getBranches: getBranches,
+     getCatalogue:getCatalogue
+}
