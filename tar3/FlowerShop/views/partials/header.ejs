@@ -1,3 +1,5 @@
+<div class="bg"></div>
+
 <div id="navbar">
     <nav class="navbar navbar-fixed-top" id="logo">
     <div>
@@ -42,23 +44,28 @@
             
              
 
-            <% if(role === "employee" | role ==="manager" ){ %>
-                <% console.log("some bodt is in!!"); %> 
-                <li class="nav-item">
-                    <a class="nav-link" href="#logout">Logout</a>
-                </li>
-            <% } %>
+
 
             </ul>
         </div>
-
+        <% if(role === "employee" | role ==="manager" ){ %>
+            <% console.log("some bodt is in!!"); %>
+    <div class="collapse navbar-collapse float-left" >
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" class="btn btn-outline-light" href="#logout">Logout</a>
+            </li>
+        </ul></div>
+        <% } %>
         <% if(role != "employee" && role !="manager" ){ %>
-            <% console.log("no one is here!!!"); %> 
+            <% console.log("no one is here!!!"); %>
 
                 <div class="collapse navbar-collapse float-left" >
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <button type="button" class="btn" data-toggle="modal" data-target="#myModal" id="modal-launcher">Login</button>
+                            <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#myModal" data-target=".bd-example-modal-sm" id="modal-launcher">Login</button>
+<!--                            <button onclick="document.getElementById('id01').style.display='block'" type="button" class="btn btn-outline-light" style="width:auto;">Login</button>-->
+
                             <%- include ("login.ejs")%>
             <!--                <a class="nav-link" href="views/partials/login.ejs" >Login<span class="sr-only">(current)</span></a>-->
                         </li>

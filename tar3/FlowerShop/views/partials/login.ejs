@@ -1,24 +1,26 @@
-<div class="modal" tabindex="-1" role="dialog" id="myModal">
+<div class="modal" tabindex="-1" role="dialog" id="myModal" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="close"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" >
                 <form action="" method="get" id="form">
-                    <label for="userName">Full name:</label>
-                    <input type="text" id="userName" name="userName"><br><br>
-                    <label for="password">Last name:</label>
-                    <input type="password" id="password" name="password"><br><br>
-                    <input type="submit" value="Submit">
+                    <div class="form-group">
+                        <label for="userName">User Name</label>
+                        <input type="text" class="form-control" id="userName" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary"   >Login</button>
                 </form>
-                
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="modal-footer" id="mod_footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -33,7 +35,7 @@ form.addEventListener('submit', function(event) {
 
     var userName = form[0].value;
     var password = form[1].value;
-    
+
     fetch('/../', {
                       method: 'POST',
                       headers: {
@@ -46,13 +48,15 @@ form.addEventListener('submit', function(event) {
                   }).then(function(data) {
                     role = data;
                       console.log("LOG role is: ", role);
-                       
+
                         updateNavbar(role);
                   });
 
                   
     event.preventDefault();
-    });
+    $('#myModal').modal( 'hide' );
+
+});
 
     function updateNavbar(role){
         console.log("updateNavbar clicked with role: ", role);
